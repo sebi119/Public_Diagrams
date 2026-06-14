@@ -1,0 +1,90 @@
+@startuml
+title Java-/Maven-Upgrade Lebenszyklus
+
+[*] --> Vorbereitung
+
+state Vorbereitung {
+  [*] --> ArbeitsbaumPruefen
+  ArbeitsbaumPruefen --> Baseline : git status sauber,\nUpgrade-Branch anlegen
+  Baseline --> [*] : mvn clean verify\n(Baseline gruen)
+}
+note right of Vorbereitung
+  Start immer von einem gruenen
+  Build + sauberem Branch
+  (z.B. feature/jdk21).
+end note
+
+Vorbereitung --> Updateart : Baseline OK
+
+state Updateart <<choice>>
+Updateart --> MinorPfad : Minor / Patch
+Updateart --> MajorPfad : Major (z.B. 17 -> 21)
+
+state MinorPfad {
+  [*] --> DepsPatchen
+  DepsPatchen --> JdkMinor : mvn versions:use-latest-releases
+  JdkMinor --> [*] : compiler.release + CI-Image anheben
+}
+note bottom of MinorPfad
+  Patch-Level, selten Breaking
+  Changes. OpenRewrite meist
+  nicht noetig.
+end note
+
+state MajorPfad {
+  [*] --> DepsKompatibel
+  DepsKompatibel --> RewriteVorschau : Abhaengigkeiten JDK-tauglich anheben
+  RewriteVorschau --> RewriteAnwenden : mvn rewrite:dryRun\n(Diff pruefen)
+  RewriteAnwenden --> JdkMajor : mvn rewrite:run\n(Recipes anwenden)
+  JdkMajor --> [*] : compiler.release = 21\n+ CI-Image + Toolchain
+}
+note bottom of MajorPfad
+  OpenRewrite-Recipes:
+  - ...java.migrate.UpgradeToJava21
+  - ...jakarta.JavaxMigrationToJakarta
+  - ...spring.boot3.UpgradeSpringBoot_3_x
+end note
+
+MinorPfad --> Bauen
+MajorPfad --> Bauen
+
+state Bauen : mvn clean compile
+
+Bauen --> KompilierPruefung
+state KompilierPruefung <<choice>>
+KompilierPruefung --> Testen : kompiliert
+KompilierPruefung --> FehlerBeheben : Compile-Fehler
+
+FehlerBeheben --> Bauen : Code / Dependencies korrigieren
+
+state Testen : mvn verify\n(Surefire + Failsafe)
+note right of Testen
+  Unit-Tests (Surefire) +
+  Integrationstests (Failsafe).
+  Bei Bedarf neue Tests fuer
+  geaendertes Verhalten.
+end note
+
+Testen --> TestPruefung
+state TestPruefung <<choice>>
+TestPruefung --> Abschluss : alle Tests gruen
+TestPruefung --> Fehleranalyse : Tests rot
+
+state Fehleranalyse <<choice>>
+Fehleranalyse --> TestsFixen : behebbar
+Fehleranalyse --> Rollback : zu riskant / blockiert
+
+TestsFixen --> Bauen : anpassen + erneut bauen
+
+state Abschluss {
+  [*] --> MergeRequest
+  MergeRequest --> CIGruen : Push, GitLab-Pipeline laeuft
+  CIGruen --> [*] : Review + Merge
+}
+
+Abschluss --> [*]
+
+state Rollback : git reset --hard\nBranch verwerfen
+Rollback --> [*]
+
+@enduml
