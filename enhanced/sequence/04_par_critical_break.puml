@@ -1,0 +1,16 @@
+@startuml
+'' Feature: par (parallel), critical, break
+title Parallel / Critical / Break
+A -> B : start
+par
+  B -> C : Task 1
+and
+  B -> D : Task 2
+end
+critical Sperrbereich
+  B -> B : lock()
+end
+break Abbruchbedingung
+  B --> A : Fehler
+end
+@enduml

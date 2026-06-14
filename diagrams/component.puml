@@ -1,0 +1,21 @@
+@startuml
+title Systemarchitektur
+package "Frontend" {
+  [Web-Client]
+  [Mobile-App]
+}
+package "Backend" {
+  [API-Gateway]
+  [Auth-Service]
+  [Order-Service]
+}
+database "PostgreSQL" as DB
+cloud "Zahlungsanbieter" as Pay
+
+[Web-Client] --> [API-Gateway] : HTTPS
+[Mobile-App] --> [API-Gateway] : HTTPS
+[API-Gateway] --> [Auth-Service]
+[API-Gateway] --> [Order-Service]
+[Order-Service] --> DB
+[Order-Service] --> Pay : REST
+@enduml

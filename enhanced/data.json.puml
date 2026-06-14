@@ -1,0 +1,19 @@
+@startjson
+!theme sketchy-outline
+title Beispiel: API-Antwort als JSON-Diagramm
+{
+  "bestellung": {
+    "id": 4711,
+    "kunde": {
+      "name": "Erika Mustermann",
+      "premium": true
+    },
+    "positionen": [
+      { "produkt": "Tastatur", "menge": 1, "preis": 79.99 },
+      { "produkt": "Maus", "menge": 2, "preis": 29.50 }
+    ],
+    "gesamt": 138.99,
+    "status": "VERSANDT"
+  }
+}
+@endjson

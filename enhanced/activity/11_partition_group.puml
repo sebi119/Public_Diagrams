@@ -1,0 +1,13 @@
+@startuml
+'' Feature: partition / group zur visuellen Buendelung
+title Partition / Group
+start
+partition "Vorbereitung" #LightCyan {
+  :Konfiguration laden;
+  :Verbindung oeffnen;
+}
+group Hauptlauf
+  :Daten verarbeiten;
+}
+stop
+@enduml

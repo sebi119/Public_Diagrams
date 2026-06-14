@@ -1,0 +1,13 @@
+@startuml
+'' Feature: box zur Gruppierung von Teilnehmern
+title Teilnehmer-Boxen
+box "Frontend" #LightBlue
+  participant Web
+end box
+box "Backend" #LightGreen
+  participant API
+  database DB
+end box
+Web -> API : Anfrage
+API -> DB : Query
+@enduml

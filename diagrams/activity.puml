@@ -1,0 +1,20 @@
+@startuml
+title Bestellprozess
+start
+:Warenkorb pruefen;
+if (Artikel verfuegbar?) then (ja)
+  :Zahlung verarbeiten;
+  if (Zahlung erfolgreich?) then (ja)
+    :Bestellung bestaetigen;
+    :Versand veranlassen;
+  else (nein)
+    :Zahlung ablehnen;
+    stop
+  endif
+else (nein)
+  :Nachbestellung anbieten;
+  stop
+endif
+:Bestaetigung senden;
+stop
+@enduml

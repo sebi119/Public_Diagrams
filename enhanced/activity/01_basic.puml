@@ -1,0 +1,9 @@
+@startuml
+'' Feature: Grundgeruest start/stop, Aktionen
+title Basis (neue Syntax)
+start
+:Eingabe lesen;
+:Verarbeiten;
+:Ausgabe schreiben;
+stop
+@enduml

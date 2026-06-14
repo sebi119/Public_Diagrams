@@ -1,0 +1,57 @@
+@startuml
+!theme spacelab
+title Domaenenmodell mit Generics, Interfaces & Stereotypen
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+hide empty members
+
+package "domain" <<Frame>> {
+  interface Repository<T> <<interface>> {
+    +findById(id: Long): Optional<T>
+    +save(entity: T): T
+    +deleteById(id: Long): void
+  }
+
+  abstract class Entity {
+    #id: Long
+    #createdAt: Instant
+    +{abstract} validate(): boolean
+  }
+
+  class Kunde extends Entity {
+    -name: String
+    -email: String
+    -status: KundenStatus
+    +bestellungen(): List<Bestellung>
+  }
+
+  class Bestellung extends Entity {
+    -datum: LocalDate
+    -positionen: List<Position>
+    +gesamt(): Money
+    +stornieren(): void
+  }
+
+  enum KundenStatus {
+    AKTIV
+    GESPERRT
+    PREMIUM
+  }
+
+  class Money <<value object>> {
+    +betrag: BigDecimal
+    +waehrung: Currency
+    +plus(other: Money): Money
+  }
+}
+
+Repository <|.. Kunde : <<verwaltet>>
+Kunde "1" o-- "*" Bestellung
+Kunde --> KundenStatus
+Bestellung ..> Money : verwendet
+
+note bottom of Money
+  Unveraenderliches Value Object.
+  Gleichheit ueber Wert, nicht Identitaet.
+end note
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+title Projektplan - Software-Release
+project starts 2026-07-01
+skinparam ganttArrowColor #555
+
+[Anforderungsanalyse] as [req] lasts 5 days
+[Architekturdesign] as [arch] lasts 4 days
+[arch] starts at [req]'s end
+
+[Backend-Entwicklung] as [be] lasts 12 days
+[be] starts at [arch]'s end
+[Frontend-Entwicklung] as [fe] lasts 10 days
+[fe] starts at [arch]'s end
+
+[Integration] as [int] lasts 5 days
+[int] starts at [be]'s end
+[int] starts at [fe]'s end
+
+[Testing] as [test] lasts 6 days
+[test] starts at [int]'s end
+
+[Release] as [rel] happens at [test]'s end
+
+[req] is colored in LightBlue
+[arch] is colored in LightGreen
+[be] is colored in Gold
+[fe] is colored in Gold
+[int] is colored in Orange
+[test] is colored in Salmon
+@enduml

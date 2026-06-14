@@ -1,0 +1,23 @@
+@startmindmap
+!theme aws-orange
+title PlantUML Diagrammtypen
+* PlantUML
+** UML
+*** Sequenz
+*** Klasse
+*** Aktivitaet
+*** Zustand
+*** Komponente
+*** Use Case
+** Nicht-UML
+*** Gantt
+*** Mindmap
+*** WBS
+*** JSON/YAML
+*** ER-Diagramm
+** Optionen
+*** Themes
+*** skinparam
+*** Farben
+*** Sprites
+@endmindmap

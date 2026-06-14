@@ -1,0 +1,11 @@
+@startuml
+title Ticket-Lebenszyklus
+[*] --> Offen
+Offen --> InBearbeitung : zuweisen
+InBearbeitung --> Wartend : Rueckfrage
+Wartend --> InBearbeitung : Antwort erhalten
+InBearbeitung --> Geloest : Loesung
+Geloest --> Geschlossen : bestaetigt
+Geloest --> InBearbeitung : erneut geoeffnet
+Geschlossen --> [*]
+@enduml

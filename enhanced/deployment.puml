@@ -1,0 +1,41 @@
+@startuml
+!theme toy
+title Deployment-Diagramm - Cloud-Architektur
+skinparam node {
+  BackgroundColor #FEFECE
+  BorderColor #333
+}
+
+cloud "Internet" {
+  actor Nutzer
+}
+
+node "Load Balancer" as LB <<nginx>>
+
+package "Kubernetes-Cluster" {
+  node "Pod: Frontend" as FE {
+    artifact "react-app:1.4" as react
+  }
+  node "Pod: Backend" as BE {
+    artifact "api-server:2.1" as api
+    artifact "worker:2.1" as worker
+  }
+}
+
+database "Primary DB" as PDB <<PostgreSQL>>
+database "Replica DB" as RDB <<PostgreSQL>>
+queue "Redis" as cache <<cache>>
+
+Nutzer --> LB : HTTPS :443
+LB --> FE
+FE --> BE : REST/gRPC
+BE --> cache : Session/Cache
+BE --> PDB : Schreiben
+BE --> RDB : Lesen
+PDB ..> RDB : Replikation
+
+note right of cache
+  TTL: 3600s
+  Eviction: LRU
+end note
+@enduml

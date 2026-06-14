@@ -1,0 +1,16 @@
+@startuml
+'' Feature: alt / opt / loop kombinierte Fragmente
+title Kombinierte Fragmente
+A -> B : request
+alt erfolgreich
+  B --> A : 200 OK
+else Fehler
+  B --> A : 500
+end
+opt optional
+  A -> B : log()
+end
+loop 3 mal
+  A -> B : retry
+end
+@enduml

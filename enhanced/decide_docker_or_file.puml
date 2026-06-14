@@ -1,0 +1,25 @@
+@startuml
+!theme materia
+title Entscheidungshilfe: "Docker-Container" oder "Datei auf dem Server"?
+start
+:Artefakt auf dem Zielsystem suchen;
+if (Mit  docker ps / docker images  sichtbar?) then (ja)
+  :Laeuft in einem <b>Container</b>;
+  #LightBlue:Benoetigte Rechte:\nGruppe 'docker' ODER sudo/root;
+  if (Datei wird per Volume gemountet?) then (ja)
+    :Zusaetzlich Host-Dateirechte\nam Mount-Pfad noetig;
+  else (nein)
+    :Nur via 'docker exec' erreichbar;
+  endif
+else (nein)
+  if (Pfad existiert im Host-Dateisystem? (ls -l)) then (ja)
+    :Liegt als <b>Datei direkt</b> auf dem Server;
+    #LightYellow:Benoetigte Rechte:\nUNIX rwx am Pfad\n(Owner/Gruppe) oder sudo;
+  else (nein)
+    :Weder Container noch Datei gefunden\n-> woanders / nicht deployed;
+    stop
+  endif
+endif
+:Zugriff entsprechend gewaehren;
+stop
+@enduml

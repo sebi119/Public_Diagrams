@@ -1,0 +1,16 @@
+@startuml
+'' Feature: Swimlanes (Partitionen) mit Farbe
+title Swimlanes
+|#LightBlue|Client|
+start
+:Anfrage senden;
+|#LightYellow|Server|
+:Verarbeiten;
+|#LightGreen|DB|
+:Speichern;
+|Server|
+:Antwort;
+|Client|
+:Anzeigen;
+stop
+@enduml

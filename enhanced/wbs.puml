@@ -1,0 +1,22 @@
+@startwbs
+!theme cerulean
+title Work Breakdown Structure - Release 2.0
+* Release 2.0
+** Planung
+*** Anforderungen
+*** Ressourcen
+** Entwicklung
+*** Backend
+**** API
+**** Datenbank
+*** Frontend
+**** UI
+**** UX-Tests
+** Qualitaet
+*** Unit-Tests
+*** Integrationstests
+*** Lasttests
+** Auslieferung
+*** Deployment
+*** Dokumentation
+@endwbs

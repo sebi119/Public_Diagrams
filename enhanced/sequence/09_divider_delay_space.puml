@@ -1,0 +1,11 @@
+@startuml
+'' Feature: Trenner (==), Verzoegerung (...), Abstand (|||)
+title Trenner / Delay / Abstand
+== Initialisierung ==
+A -> B : init
+... 5 Minuten spaeter ...
+A -> B : poll
+|||
+== Abschluss ==
+A -> B : close
+@enduml

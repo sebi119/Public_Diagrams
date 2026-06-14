@@ -1,0 +1,11 @@
+@startuml
+'' Feature: autonumber mit Format, Start, Increment, resume
+title Automatische Nummerierung
+autonumber 10 10 "<b>[000]</b>"
+A -> B : erster
+A -> B : zweiter
+autonumber stop
+A -> B : ohne Nummer
+autonumber resume
+A -> B : weiter
+@enduml

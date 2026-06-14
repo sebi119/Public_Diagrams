@@ -1,0 +1,14 @@
+@startuml
+'' Feature: switch / case
+title Switch / Case
+start
+switch (Rolle?)
+case (Admin)
+  :Vollzugriff;
+case (Editor)
+  :Schreibzugriff;
+case (Gast)
+  :Nur Lesen;
+endswitch
+stop
+@enduml

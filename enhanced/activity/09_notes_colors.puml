@@ -1,0 +1,13 @@
+@startuml
+'' Feature: farbige Aktionen + Notizen
+title Farben & Notizen
+start
+#LightGreen:gueltige Eingabe;
+note right: validiert per Regex
+#Pink:Fehlerfall;
+note left
+  mehrzeilige
+  Notiz
+end note
+stop
+@enduml

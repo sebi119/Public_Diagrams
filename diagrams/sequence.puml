@@ -1,0 +1,19 @@
+@startuml
+title Login-Ablauf
+actor Benutzer
+participant "Web-App" as Web
+participant "Auth-Service" as Auth
+database "DB" as DB
+
+Benutzer -> Web : Anmeldedaten eingeben
+Web -> Auth : POST /login
+Auth -> DB : Benutzer pruefen
+DB --> Auth : Benutzerdatensatz
+alt Gueltige Anmeldedaten
+    Auth --> Web : JWT-Token
+    Web --> Benutzer : Weiterleitung zum Dashboard
+else Ungueltig
+    Auth --> Web : 401 Unauthorized
+    Web --> Benutzer : Fehlermeldung anzeigen
+end
+@enduml

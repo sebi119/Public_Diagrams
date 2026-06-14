@@ -1,0 +1,11 @@
+@startuml
+'' Feature: repeat / repeat while mit backward
+title Repeat-Schleife
+start
+repeat
+  :Daten abrufen;
+  :Verarbeiten;
+backward:warten 1s;
+repeat while (mehr Daten?) is (ja) not (nein)
+stop
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+left to right direction
+title Anwendungsfaelle - Bibliothek
+actor Leser
+actor Bibliothekar
+rectangle Bibliothekssystem {
+  Leser -- (Buch suchen)
+  Leser -- (Buch ausleihen)
+  Leser -- (Buch zurueckgeben)
+  Bibliothekar -- (Bestand verwalten)
+  Bibliothekar -- (Mitglied registrieren)
+  (Buch ausleihen) ..> (Mitgliedschaft pruefen) : <<include>>
+}
+@enduml

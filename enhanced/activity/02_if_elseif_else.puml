@@ -1,0 +1,13 @@
+@startuml
+'' Feature: Verzweigung if / elseif / else
+title If / ElseIf / Else
+start
+if (HTTP-Status?) then (2xx)
+  :Erfolg;
+elseif (4xx) then
+  :Client-Fehler;
+else (5xx)
+  :Server-Fehler;
+endif
+stop
+@enduml

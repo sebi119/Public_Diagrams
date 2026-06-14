@@ -1,0 +1,12 @@
+@startuml
+'' Feature: while-Schleife mit Ausgang
+title While-Schleife
+start
+:i = 0;
+while (i < 10?) is (ja)
+  :verarbeite i;
+  :i++;
+endwhile (nein)
+:fertig;
+stop
+@enduml

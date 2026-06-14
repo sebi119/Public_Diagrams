@@ -1,0 +1,12 @@
+@startuml
+'' Feature: Aktivierungsbalken, verschachtelt + Farbe
+title Aktivierung (activate/deactivate)
+A -> B : Aufruf
+activate B
+B -> C : Unteraufruf
+activate C #Gold
+C --> B : Ergebnis
+deactivate C
+B --> A : fertig
+deactivate B
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+'' Feature: Lebenslinien erzeugen und zerstoeren
+title Create / Destroy
+A -> B : new Worker()
+create C
+B -> C : <<create>>
+C --> B : bereit
+B ->x C : stop
+destroy C
+@enduml

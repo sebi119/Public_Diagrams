@@ -1,0 +1,14 @@
+@startuml
+'' Feature: Konnektoren (label/goto) zur Sprungmarke
+title Konnektoren / Goto
+start
+:Schritt 1;
+label sprung
+:Schritt 2;
+if (wiederholen?) then (ja)
+  goto sprung
+else (nein)
+endif
+:Schritt 3;
+stop
+@enduml

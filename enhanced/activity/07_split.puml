@@ -1,0 +1,11 @@
+@startuml
+'' Feature: split (mehrere Ausgaenge, kein join)
+title Split
+start
+split
+  :Pfad A;
+split again
+  :Pfad B;
+end split
+detach
+@enduml

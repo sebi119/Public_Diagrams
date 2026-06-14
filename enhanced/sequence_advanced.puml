@@ -1,0 +1,62 @@
+@startuml
+!theme cerulean-outline
+title Erweiterter Login- & Bestellablauf
+autonumber "<b>[00]"
+skinparam responseMessageBelowArrow true
+skinparam sequenceMessageAlign center
+
+actor Benutzer as U
+participant "Web-App" as Web #LightBlue
+participant "API-Gateway" as GW
+participant "Auth-Service" as Auth
+participant "Order-Service" as Ord
+database "PostgreSQL" as DB
+queue "Event-Bus" as MQ
+
+U -> Web : Login-Daten
+activate Web
+Web -> GW : POST /login
+activate GW
+GW -> Auth : authentifizieren
+activate Auth
+Auth -> DB : SELECT user
+activate DB
+DB --> Auth : Datensatz
+deactivate DB
+
+alt #LightGreen Erfolgreich
+  Auth --> GW : JWT (TTL 15min)
+  GW --> Web : 200 + Token
+  Web --> U : Dashboard
+  note right of U
+    Token wird im
+    HttpOnly-Cookie gespeichert
+  end note
+else #Pink Fehlgeschlagen
+  Auth --> GW : 401
+  GW --> Web : 401
+  Web --> U : Fehler anzeigen
+end
+deactivate Auth
+deactivate GW
+
+group Bestellung aufgeben
+  U -> Web : Bestellung absenden
+  Web -> GW : POST /orders
+  GW -> Ord : createOrder()
+  activate Ord
+  Ord -> DB : INSERT order
+  Ord -> MQ : publish OrderCreated
+  Ord --> Web : 201 Created
+  deactivate Ord
+end
+
+== Asynchrone Verarbeitung ==
+MQ -->> Ord : OrderCreated konsumiert
+note over MQ, Ord #FFFACD
+  Entkopplung ueber Events:
+  Versand, E-Mail, Rechnung
+  laufen unabhaengig
+end note
+deactivate Web
+@enduml

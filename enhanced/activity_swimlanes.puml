@@ -1,0 +1,52 @@
+@startuml
+!theme materia
+title Bestellabwicklung mit Swimlanes
+skinparam ConditionEndStyle hline
+
+|#LightBlue|Kunde|
+start
+:Produkte in Warenkorb legen;
+:Zur Kasse gehen;
+
+|#LightYellow|Shop-System|
+:Verfuegbarkeit pruefen;
+if (Alle Artikel verfuegbar?) then (ja)
+  :Reservieren;
+else (nein)
+  |Kunde|
+  :Benachrichtigung erhalten;
+  if (Trotzdem bestellen?) then (ja)
+    |Shop-System|
+    :Nachbestellung anlegen;
+  else (nein)
+    stop
+  endif
+endif
+
+|#LightYellow|Shop-System|
+:Zahlung anfordern;
+
+|#Pink|Zahlungsanbieter|
+:Transaktion verarbeiten;
+if (Zahlung OK?) then (ja)
+  :Bestaetigung senden;
+else (nein)
+  |Kunde|
+  :Zahlung wiederholen;
+  stop
+endif
+
+|#LightGreen|Logistik|
+:Kommissionieren;
+:Verpacken;
+fork
+  :Versandlabel erstellen;
+fork again
+  :Lagerbestand aktualisieren;
+end fork
+:Paket uebergeben;
+
+|Kunde|
+:Sendungsverfolgung erhalten;
+stop
+@enduml

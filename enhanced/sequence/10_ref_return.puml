@@ -1,0 +1,11 @@
+@startuml
+'' Feature: ref over (Referenz) + return-Keyword
+title Referenz & Return
+A -> B : login()
+activate B
+ref over B, C : Authentifizierung\n(siehe Auth-Diagramm)
+B -> C : verify()
+activate C
+return token
+return ok
+@enduml

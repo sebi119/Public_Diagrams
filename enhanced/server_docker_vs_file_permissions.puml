@@ -1,0 +1,66 @@
+@startuml
+!theme toy
+title Wo liegt das Artefakt? Docker-Container vs. Datei auf dem Server\n(inkl. benoetigter Berechtigungen)
+
+skinparam node {
+  BorderColor #333
+  BackgroundColor #FEFECE
+}
+skinparam shadowing false
+
+actor "DevOps / Admin" as admin
+
+node "Linux-Server (Host)\nz.B. Ubuntu 22.04" as host {
+
+  ' ---------- Variante A: Datei direkt auf dem Server ----------
+  folder "Variante A:\nArtefakt liegt direkt als Datei auf dem Server" as varA #LightYellow {
+    artifact "/opt/app/app.jar\n(oder script.sh)" as fileA
+  }
+  note right of fileA #FFFACD
+    <b>Liegt im Dateisystem des Hosts</b>
+    ====
+    <b>Berechtigungen:</b>
+    * Eigentuemer: <i>appuser:appgroup</i>
+    * Rechte: <i>chmod 750</i>  (rwxr-x---)
+    * Lesen/Ausfuehren: nur appuser + Gruppe
+    * Aendern/Ersetzen: Owner <b>oder</b> root (sudo)
+    * Start: systemd-Unit, cron oder direkter Aufruf
+    ----
+    Pruefen:  <i>ls -l /opt/app/app.jar</i>
+    Zugriff:  SSH-Login + passende UNIX-Rechte
+  end note
+
+  ' ---------- Variante B: im Docker-Container ----------
+  node "Docker Engine\n(dockerd, laeuft als root)" as engine #LightBlue {
+    node "Container: myapp\n(eigener UID/Namespace)" as cont {
+      artifact "app.jar\n(im Image-Layer)" as fileB
+    }
+  }
+  note right of cont #D5E8FF
+    <b>Liegt isoliert im Container</b>
+    ====
+    <b>Berechtigungen:</b>
+    * Container starten/stoppen braucht:
+       ** Mitglied der Gruppe <b>docker</b>
+       ** <b>oder</b> root (sudo docker ...)
+    * Im Container: eigener User (z.B. UID 1000)
+    * Dateien nur via <i>docker exec</i> / Volume erreichbar
+    * Volume-Mount: Host-Dateirechte gelten weiter!
+    ----
+    <color:red><b>Achtung:</b></color> wer in der Gruppe
+    <b>docker</b> ist, ist faktisch <b>root</b> auf dem Host.
+  end note
+}
+
+admin --> fileA : SSH + Owner/sudo
+admin --> engine : Gruppe 'docker'\noder sudo
+
+legend right
+  |= Frage |= Variante A (Datei) |= Variante B (Docker) |
+  | Wo liegt es? | Host-Dateisystem | Container / Image-Layer |
+  | Sichtbar mit | ls / find | docker ps / docker exec |
+  | Mindest-Recht | UNIX rwx am Pfad | Gruppe 'docker' oder root |
+  | Aendern | Owner oder sudo | Image neu bauen / Volume |
+  | Isolation | keine | Namespace + cgroups |
+endlegend
+@enduml

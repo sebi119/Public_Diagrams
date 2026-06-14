@@ -1,0 +1,14 @@
+@startuml
+'' Feature: fork / fork again / join (parallel)
+title Fork / Join
+start
+fork
+  :Bild rendern;
+fork again
+  :Audio kodieren;
+fork again
+  :Untertitel erzeugen;
+end fork
+:Zusammenfuehren;
+stop
+@enduml

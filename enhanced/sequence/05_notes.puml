@@ -1,0 +1,10 @@
+@startuml
+'' Feature: Notizen - left/right/over, hnote, rnote
+title Notizvarianten
+A -> B : msg
+note left  : Notiz links
+note right : Notiz rechts
+note over A, B : Notiz ueber beiden
+hnote over A : Hexagon-Notiz
+rnote over B : Rechteck-Notiz
+@enduml

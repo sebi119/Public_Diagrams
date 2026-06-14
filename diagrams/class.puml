@@ -1,0 +1,26 @@
+@startuml
+title Domaenenmodell - Onlineshop
+class Kunde {
+  +Long id
+  +String name
+  +String email
+  +bestellen(): Bestellung
+}
+class Bestellung {
+  +Long id
+  +LocalDate datum
+  +BigDecimal gesamt()
+}
+class Position {
+  +int menge
+  +BigDecimal teilsumme()
+}
+class Produkt {
+  +Long id
+  +String bezeichnung
+  +BigDecimal preis
+}
+Kunde "1" --> "*" Bestellung : taetigt
+Bestellung "1" *-- "*" Position : enthaelt
+Position "*" --> "1" Produkt : verweist auf
+@enduml

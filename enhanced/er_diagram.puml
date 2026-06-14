@@ -1,0 +1,43 @@
+@startuml
+!theme blueprint
+title Entity-Relationship - Onlineshop (Chen/Crow-Foot)
+skinparam linetype ortho
+
+entity "kunde" as kunde {
+  *id : BIGINT <<PK>>
+  --
+  *name : VARCHAR(100)
+  *email : VARCHAR(255) <<unique>>
+  status : VARCHAR(20)
+  erstellt_am : TIMESTAMP
+}
+
+entity "bestellung" as best {
+  *id : BIGINT <<PK>>
+  --
+  *kunde_id : BIGINT <<FK>>
+  *datum : DATE
+  status : VARCHAR(20)
+}
+
+entity "position" as pos {
+  *id : BIGINT <<PK>>
+  --
+  *bestellung_id : BIGINT <<FK>>
+  *produkt_id : BIGINT <<FK>>
+  *menge : INT
+  einzelpreis : DECIMAL(10,2)
+}
+
+entity "produkt" as prod {
+  *id : BIGINT <<PK>>
+  --
+  *bezeichnung : VARCHAR(200)
+  *preis : DECIMAL(10,2)
+  lagerbestand : INT
+}
+
+kunde ||--o{ best : "taetigt"
+best ||--|{ pos : "enthaelt"
+prod ||--o{ pos : "wird bestellt in"
+@enduml

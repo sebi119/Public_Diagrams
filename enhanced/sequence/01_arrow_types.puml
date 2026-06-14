@@ -1,0 +1,11 @@
+@startuml
+'' Feature: verschiedene Pfeiltypen
+title Pfeiltypen
+A -> B   : synchron (->)
+A ->> B  : asynchron (->>)
+A -\ B   : halber Pfeil
+A --> B  : gestrichelt (Antwort)
+A -[#red]> B : farbiger Pfeil
+A o-> B  : mit Kreis-Ende
+A ->x B  : verloren (lost)
+@enduml
