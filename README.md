@@ -1,12 +1,30 @@
 # PlantUML & Mermaid Beispiele
 
+
 Eine Sammlung von Diagrammen als Lern- und Referenzbeispiele – jeweils in **zwei Formaten**:
+=======
+
+**VS Code:** Extension "PlantUML" (jebbs) installieren, dann `Alt+D` zum Vorschauen.
+
+
+Eine Sammlung von PlantUML-Diagrammen als Lern- und Referenzbeispiele.
+
 
 - **`.puml`** (PlantUML): höchste Qualität, rendert in VS Code / plantuml.com, **aber NICHT auf GitHub**.
 - **`.md`** (Mermaid): **rendert direkt hier auf GitHub** im Browser.
 
+
 > GitHub unterstützt Mermaid nativ in Markdown, PlantUML jedoch nicht. Darum gibt es zu jedem
 > Diagramm eine Mermaid-Variante als `.md`-Datei.
+=======
+| Datei | Diagrammtyp |
+|-------|-------------|
+| `diagrams/sequence.puml`  | Sequenzdiagramm (Login-Flow) |
+| `diagrams/class.puml`     | Klassendiagramm (Domänenmodell) |
+| `diagrams/usecase.puml`   | Anwendungsfalldiagramm |
+| `diagrams/activity.puml`  | Aktivitätsdiagramm (Bestellprozess) |
+| `diagrams/component.puml` | Komponentendiagramm (Architektur) |
+| `diagrams/state.puml`     | Zustandsdiagramm (Ticket-Lebenszyklus) |
 
 ## Basis-Diagramme
 
@@ -45,6 +63,7 @@ sequenceDiagram
         Web-->>Benutzer: Fehlermeldung anzeigen
     end
 ```
+
 
 ### Klasse – Domänenmodell
 ```mermaid
@@ -143,3 +162,5 @@ stateDiagram-v2
 - **Online:** Inhalt nach <https://www.plantuml.com/plantuml> kopieren.
 - **Lokal (Java + Graphviz):** `java -jar plantuml.jar diagrams/*.puml`
 - **VS Code:** Extension „PlantUML" (jebbs), dann `Alt+D` zur Vorschau.
+=======
+
