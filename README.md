@@ -1,5 +1,9 @@
 # PlantUML Beispiele
 
+
+**VS Code:** Extension "PlantUML" (jebbs) installieren, dann `Alt+D` zum Vorschauen.
+
+
 Eine Sammlung von PlantUML-Diagrammen als Lern- und Referenzbeispiele.
 
 ## Inhalt
@@ -7,9 +11,9 @@ Eine Sammlung von PlantUML-Diagrammen als Lern- und Referenzbeispiele.
 | Datei | Diagrammtyp |
 |-------|-------------|
 | `diagrams/sequence.puml`  | Sequenzdiagramm (Login-Flow) |
-| `diagrams/class.puml`     | Klassendiagramm (Dom‰nenmodell) |
+| `diagrams/class.puml`     | Klassendiagramm (Dom√§nenmodell) |
 | `diagrams/usecase.puml`   | Anwendungsfalldiagramm |
-| `diagrams/activity.puml`  | Aktivit‰tsdiagramm (Bestellprozess) |
+| `diagrams/activity.puml`  | Aktivit√§tsdiagramm (Bestellprozess) |
 | `diagrams/component.puml` | Komponentendiagramm (Architektur) |
 | `diagrams/state.puml`     | Zustandsdiagramm (Ticket-Lebenszyklus) |
 
@@ -22,4 +26,3 @@ Eine Sammlung von PlantUML-Diagrammen als Lern- und Referenzbeispiele.
 java -jar plantuml.jar diagrams/*.puml
 ```
 
-**VS Code:** Extension "PlantUML" (jebbs) installieren, dann `Alt+D` zum Vorschauen.
